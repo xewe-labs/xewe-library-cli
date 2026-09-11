@@ -1,23 +1,23 @@
-# XeWeCommandExecutor
+# XeWeCli
 
 A serial command line for ESP32. Commands are grouped and typed as
 `$<group> <command> [args...]`; quoted arguments may contain spaces.
 
 ```cpp
-#include <XeWeCommandExecutor.h>
+#include <XeWeCli.h>
 
-xewe::SerialPort      serial;
-xewe::CommandExecutor cli(serial);
+xewe::SerialPort serial;
+xewe::Cli        xewe_cli(serial);
 
 void setup() {
     serial.begin();
-    cli.add_group("led", "LED");
-    cli.add_command("led", {"set", "Set level 0-255", "$led set 128", 1,
+    xewe_cli.add_group("led", "LED");
+    xewe_cli.add_command("led", {"set", "Set level 0-255", "$led set 128", 1,
         [](std::span<const std::string> args) { analogWrite(8, atoi(args[0].c_str())); }});
 }
 
 void loop() {
-    cli.loop();
+    xewe_cli.loop();
 }
 ```
 

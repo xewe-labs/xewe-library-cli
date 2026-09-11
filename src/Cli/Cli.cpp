@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2026 Maxim Dokukin (maxdokukin.com)
 // SPDX-License-Identifier: GPL-3.0-only
-// xewe-library-command-executor/src/CommandExecutor/CommandExecutor.cpp
+// xewe-library-cli/src/Cli/Cli.cpp
 
-#include "CommandExecutor.h"
+#include "Cli.h"
 
 #include <algorithm>
 #include <cctype>
@@ -12,18 +12,18 @@
 
 namespace xewe {
 
-CommandExecutor::CommandExecutor(SerialPort& serial)
+Cli::Cli(SerialPort& serial)
     : serial(serial)
 {}
 
-void CommandExecutor::loop() {
+void Cli::loop() {
     serial.loop();
     if (serial.has_line()) {
         execute(serial.read_line());
     }
 }
 
-CommandGroup& CommandExecutor::add_group(std::string_view id,
+CommandGroup& Cli::add_group(std::string_view id,
                                          std::string_view name) {
     const std::string key = lower_copy(trim_copy(id));
     CommandGroup&     group = groups[key];
@@ -32,7 +32,7 @@ CommandGroup& CommandExecutor::add_group(std::string_view id,
     return group;
 }
 
-bool CommandExecutor::add_command(std::string_view group_id,
+bool Cli::add_command(std::string_view group_id,
                                   Command command) {
     auto it = groups.find(lower_copy(trim_copy(group_id)));
     if (it == groups.end() || command.name.empty() || !command.function) return false;
@@ -41,18 +41,18 @@ bool CommandExecutor::add_command(std::string_view group_id,
     return true;
 }
 
-bool CommandExecutor::remove_group(std::string_view id) {
+bool Cli::remove_group(std::string_view id) {
     return groups.erase(lower_copy(trim_copy(id))) > 0;
 }
 
-const CommandGroup* CommandExecutor::get_group(std::string_view id) const {
+const CommandGroup* Cli::get_group(std::string_view id) const {
     auto it = groups.find(lower_copy(trim_copy(id)));
     return it == groups.end() ? nullptr : &it->second;
 }
 
-const std::map<std::string, CommandGroup>& CommandExecutor::get_groups() const { return groups; }
+const std::map<std::string, CommandGroup>& Cli::get_groups() const { return groups; }
 
-bool CommandExecutor::execute(std::string_view group_id,
+bool Cli::execute(std::string_view group_id,
                               std::string_view command_name,
                               std::span<const std::string> args) const {
     const CommandGroup* group = get_group(group_id);
@@ -71,7 +71,7 @@ bool CommandExecutor::execute(std::string_view group_id,
     return false;
 }
 
-void CommandExecutor::execute(std::string_view input_line) const {
+void Cli::execute(std::string_view input_line) const {
     std::string local = trim_copy(input_line);
 
     if (local.empty()) return;
@@ -219,7 +219,7 @@ void CommandExecutor::execute(std::string_view input_line) const {
     matched_command->function(std::span<const std::string>(args.data(), args.size()));
 }
 
-void CommandExecutor::print_help(std::string_view group_id) const {
+void Cli::print_help(std::string_view group_id) const {
     const std::string id = trim_copy(group_id);
 
     if (id.empty()) {
@@ -277,7 +277,7 @@ void CommandExecutor::print_help(std::string_view group_id) const {
     serial.print_table(table_data, header);
 }
 
-void CommandExecutor::print_all_commands() const {
+void Cli::print_all_commands() const {
     for (const auto& [id, group] : groups) {
         if (!group.commands.empty()) {
             print_help(id);
@@ -285,7 +285,7 @@ void CommandExecutor::print_all_commands() const {
     }
 }
 
-std::string CommandExecutor::trim_copy(std::string_view value) {
+std::string Cli::trim_copy(std::string_view value) {
     const auto is_space = [](unsigned char c) {
         return std::isspace(c) != 0;
     };
@@ -304,7 +304,7 @@ std::string CommandExecutor::trim_copy(std::string_view value) {
     return std::string(value.substr(begin, end - begin));
 }
 
-std::string CommandExecutor::lower_copy(std::string_view value) {
+std::string Cli::lower_copy(std::string_view value) {
     std::string out(value.begin(), value.end());
 
     std::transform(
@@ -319,7 +319,7 @@ std::string CommandExecutor::lower_copy(std::string_view value) {
     return out;
 }
 
-bool CommandExecutor::tokenize(std::string_view input,
+bool Cli::tokenize(std::string_view input,
                                std::vector<std::string>& out) const {
     out.clear();
 

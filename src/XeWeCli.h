@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Maxim Dokukin (maxdokukin.com)
 // SPDX-License-Identifier: GPL-3.0-only
-// xewe-library-command-executor/src/XeWeCommandExecutor.h
+// xewe-library-cli/src/XeWeCli.h
 #pragma once
 
-#include "CommandExecutor/CommandExecutor.h"
+#include "Cli/Cli.h"

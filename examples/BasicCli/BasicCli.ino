@@ -1,9 +1,9 @@
-// XeWeCommandExecutor: a serial CLI in a few lines
+// XeWeCli: a serial CLI in a few lines
 // Try: $help   $led on   $led blink 5
-#include <XeWeCommandExecutor.h>
+#include <XeWeCli.h>
 
-xewe::SerialPort      serial;
-xewe::CommandExecutor cli(serial);
+xewe::SerialPort serial;
+xewe::Cli        xewe_cli(serial);
 
 const int LED_PIN = 8;
 
@@ -11,21 +11,21 @@ void setup() {
     serial.begin();
     pinMode(LED_PIN, OUTPUT);
 
-    cli.add_group("led", "LED");
+    xewe_cli.add_group("led", "LED");
 
-    cli.add_command("led", {"on", "Turn the LED on", "$led on", 0,
+    xewe_cli.add_command("led", {"on", "Turn the LED on", "$led on", 0,
         [](std::span<const std::string>) {
             digitalWrite(LED_PIN, HIGH);
             serial.print("LED on");
         }});
 
-    cli.add_command("led", {"off", "Turn the LED off", "$led off", 0,
+    xewe_cli.add_command("led", {"off", "Turn the LED off", "$led off", 0,
         [](std::span<const std::string>) {
             digitalWrite(LED_PIN, LOW);
             serial.print("LED off");
         }});
 
-    cli.add_command("led", {"blink", "Blink N times", "$led blink 3", 1,
+    xewe_cli.add_command("led", {"blink", "Blink N times", "$led blink 3", 1,
         [](std::span<const std::string> args) {
             int count = atoi(args[0].c_str());
             for (int i = 0; i < count; ++i) {
@@ -38,5 +38,5 @@ void setup() {
 }
 
 void loop() {
-    cli.loop();   // polls serial and executes complete lines
+    xewe_cli.loop();   // polls serial and executes complete lines
 }

@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Maxim Dokukin (maxdokukin.com)
 // SPDX-License-Identifier: GPL-3.0-only
-// xewe-library-command-executor/src/CommandExecutor/CommandExecutor.h
+// xewe-library-cli/src/Cli/Cli.h
 #pragma once
 
 #include <cstddef>
@@ -35,9 +35,9 @@ struct CommandGroup {
 // Parses lines of the form `$<group> <command> [args...]` and dispatches them to
 // registered commands. Quoted arguments ("with spaces") and \-escapes are supported.
 // `$help` lists every group, `$help <group>` / `$<group>` lists one.
-class CommandExecutor {
+class Cli {
 public:
-    explicit                 CommandExecutor    (SerialPort& serial);
+    explicit                 Cli                (SerialPort& serial);
 
     // non-blocking: polls the serial port and executes any complete line
     void                     loop               ();
