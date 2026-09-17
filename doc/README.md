@@ -39,4 +39,12 @@ Commands are typed as `$<group> <command> [args...]`. `$help` lists every group;
 [XeWeUtils](https://github.com/xewe-labs/xewe-library-utils). Used by
 [XeWeOS](https://github.com/xewe-labs/xewe-library-os), where every module gets a `$<id>` group.
 
-See [`examples/BasicCli`](../examples/BasicCli) for a runnable sketch.
+## Examples
+
+Three sketches, in increasing order of scope:
+
+| | | |
+|---|---|---|
+| low | [`01_BasicCli`](../examples/01_BasicCli) | one group, three commands |
+| mid | [`02_GroupsAndArgs`](../examples/02_GroupsAndArgs) | several groups, quoted arguments, argument validation, `get_groups` introspection |
+| high | [`03_AutomationCli`](../examples/03_AutomationCli) | commands driven from code: a non-blocking `AsyncTimer` fade, a macro command, and both `execute` overloads |

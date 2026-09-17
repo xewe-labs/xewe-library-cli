@@ -28,4 +28,5 @@ void loop() {
 * `execute("$led set 10")` runs a line from code (buttons, schedules, web requests);
   `execute("led", "set", args)` skips parsing.
 
-Depends on XeWeSerial and XeWeUtils. See `examples/BasicCli`.
+Depends on XeWeSerial and XeWeUtils. Three examples in [`examples/`](examples/):
+`01_BasicCli`, `02_GroupsAndArgs`, `03_AutomationCli`.
