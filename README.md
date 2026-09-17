@@ -1,5 +1,7 @@
 # XeWeCli
 
+> Full reference: [`doc/`](doc/) · Agent rules: [`doc/AGENTS.md`](doc/AGENTS.md)
+
 A serial command line for ESP32. Commands are grouped and typed as
 `$<group> <command> [args...]`; quoted arguments may contain spaces.
 
