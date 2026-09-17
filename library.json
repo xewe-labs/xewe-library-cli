@@ -1,6 +1,6 @@
 {
   "name": "XeWeCli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Serial command line for ESP32: register command groups and run them as $group command args.",
   "keywords": [
     "communication"
@@ -28,12 +28,12 @@
     {
       "owner": "xewe-labs",
       "name": "XeWeSerial",
-      "version": ">=0.1.0"
+      "version": ">=1.0.0"
     },
     {
       "owner": "xewe-labs",
       "name": "XeWeUtils",
-      "version": ">=0.1.0"
+      "version": ">=1.0.0"
     }
   ],
   "export": {
