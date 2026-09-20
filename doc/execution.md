@@ -46,7 +46,7 @@ is checked before the handler runs, so a handler never sees the wrong number of 
 ```cpp
 bool execute(std::string_view             group_id,
              std::string_view             command_name,
-             std::span<const std::string> args) const;
+             xewe::span<const std::string> args) const;
 ```
 
 Skips parsing entirely and returns whether a command ran. It prints nothing — not even on failure.
@@ -65,13 +65,13 @@ Returns `false` when the group is unknown or nothing matched.
 
 ## Handler arguments
 
-A handler receives `std::span<const std::string>` over a vector owned by `execute`.
+A handler receives `xewe::span<const std::string>` over a vector owned by `execute`.
 
 **The span does not outlive the call.** Copy anything you intend to keep:
 
 ```cpp
 {"name", "Set the name", "$dev name \"Kitchen\"", 1,
- [this](std::span<const std::string> args) { stored_name = args[0]; }}   // copy, not a view
+ [this](xewe::span<const std::string> args) { stored_name = args[0]; }}   // copy, not a view
 ```
 
 ## Tokenizer

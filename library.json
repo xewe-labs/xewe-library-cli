@@ -1,7 +1,7 @@
 {
   "name": "XeWeCli",
   "version": "1.0.0",
-  "description": "Serial command line for ESP32: register command groups and run them as $group command args.",
+  "description": "Serial command line: register command groups and run them as $group command args.",
   "keywords": [
     "communication"
   ],
@@ -19,7 +19,12 @@
   "homepage": "https://github.com/xewe-labs/xewe-library-cli",
   "frameworks": "arduino",
   "platforms": [
-    "espressif32"
+    "espressif32",
+    "espressif8266",
+    "nordicnrf52",
+    "raspberrypi",
+    "renesas-ra",
+    "ststm32"
   ],
   "headers": [
     "XeWeCli.h"

@@ -2,8 +2,15 @@
 
 > Full reference: [`doc/`](doc/) · Agent rules: [`doc/AGENTS.md`](doc/AGENTS.md)
 
-A serial command line for ESP32. Commands are grouped and typed as
+A serial command line. Commands are grouped and typed as
 `$<group> <command> [args...]`; quoted arguments may contain spaces.
+
+
+Supported cores: ESP32, ESP8266, RP2040, Renesas (Uno R4) and the Arduino mbed cores —
+anything whose toolchain provides C++17 and a C++ standard library. 8-bit AVR (Uno R3, Nano,
+Nano Every) is **not** supported: avr-gcc ships no `<string>`, `<vector>` or `<string_view>`.
+Only ESP32-C3/C6/S3 are compile-verified on hardware; the rest are verified at the language
+level by the host portability check in `publish-arduino-library`.
 
 ```cpp
 #include <XeWeCli.h>
@@ -15,7 +22,7 @@ void setup() {
     serial.begin();
     xewe_cli.add_group("led", "LED");
     xewe_cli.add_command("led", {"set", "Set level 0-255", "$led set 128", 1,
-        [](std::span<const std::string> args) { analogWrite(8, atoi(args[0].c_str())); }});
+        [](xewe::span<const std::string> args) { analogWrite(8, atoi(args[0].c_str())); }});
 }
 
 void loop() {

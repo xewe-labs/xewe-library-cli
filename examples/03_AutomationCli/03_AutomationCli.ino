@@ -9,7 +9,7 @@
 //      $led on
 #include <XeWeCli.h>
 
-#define LED_PIN 8   // onboard on most C3/C6/S3 dev boards; change for yours
+#define LED_PIN 8   // onboard LED on many dev boards; change for yours
 
 xewe::SerialPort    serial;
 xewe::Cli           xewe_cli(serial);
@@ -32,13 +32,13 @@ void setup() {
     xewe_cli.add_group("macro", "Macros");
 
     xewe_cli.add_command("led", {"on", "Full brightness", "$led on", 0,
-        [](std::span<const std::string>) { fade.terminate(); set_level(255); serial.print("on"); }});
+        [](xewe::span<const std::string>) { fade.terminate(); set_level(255); serial.print("on"); }});
 
     xewe_cli.add_command("led", {"off", "Off", "$led off", 0,
-        [](std::span<const std::string>) { fade.terminate(); set_level(0); serial.print("off"); }});
+        [](xewe::span<const std::string>) { fade.terminate(); set_level(0); serial.print("off"); }});
 
     xewe_cli.add_command("fade", {"to", "Fade to a level over N ms", "$fade to 255 2000", 2,
-        [](std::span<const std::string> args) {
+        [](xewe::span<const std::string> args) {
             auto target = xewe::validate<uint8_t>(args[0], 0, 255);
             auto ms     = xewe::validate<uint32_t>(args[1], 50, 60000);
             if (!target || !ms) {
@@ -51,12 +51,12 @@ void setup() {
         }});
 
     xewe_cli.add_command("fade", {"stop", "Stop where it is", "$fade stop", 0,
-        [](std::span<const std::string>) { fade.terminate(); serial.printf("stopped at %u", level); }});
+        [](xewe::span<const std::string>) { fade.terminate(); serial.printf("stopped at %u", level); }});
 
     // A macro runs other commands by their typed form. This is the same path a
     // button handler, a schedule or a web request would use.
     xewe_cli.add_command("macro", {"run", "Run a canned sequence", "$macro run", 0,
-        [](std::span<const std::string>) {
+        [](xewe::span<const std::string>) {
             xewe_cli.execute("$led off");           // parsed overload: void, prints its own errors
             xewe_cli.execute("$fade to 200 1500");
         }});

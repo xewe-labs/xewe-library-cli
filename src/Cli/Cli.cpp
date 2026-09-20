@@ -54,7 +54,7 @@ const std::map<std::string, CommandGroup>& Cli::get_groups() const { return grou
 
 bool Cli::execute(std::string_view group_id,
                               std::string_view command_name,
-                              std::span<const std::string> args) const {
+                              xewe::span<const std::string> args) const {
     const CommandGroup* group = get_group(group_id);
     if (group == nullptr) return false;
 
@@ -216,7 +216,7 @@ void Cli::execute(std::string_view input_line) const {
         args.push_back(tokens[i]);
     }
 
-    matched_command->function(std::span<const std::string>(args.data(), args.size()));
+    matched_command->function(xewe::span<const std::string>(args.data(), args.size()));
 }
 
 void Cli::print_help(std::string_view group_id) const {

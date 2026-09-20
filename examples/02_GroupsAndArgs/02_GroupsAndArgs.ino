@@ -7,7 +7,7 @@
 //      $dev                  <- same as $help dev
 #include <XeWeCli.h>
 
-#define LED_PIN 8   // onboard on most C3/C6/S3 dev boards; change for yours
+#define LED_PIN 8   // onboard LED on many dev boards; change for yours
 
 xewe::SerialPort serial;
 xewe::Cli        xewe_cli(serial);
@@ -25,7 +25,7 @@ void setup() {
     // add_command returns false for an unknown group, an empty name or an
     // empty function — worth checking while you are wiring things up.
     const bool added = xewe_cli.add_command("led", {"set", "Set level 0-255", "$led set 128", 1,
-        [](std::span<const std::string> args) {
+        [](xewe::span<const std::string> args) {
             // The argument COUNT is checked before we get here; the VALUE is ours.
             if (auto level = xewe::validate<uint8_t>(args[0], 0, 255)) {
                 analogWrite(LED_PIN, *level);
@@ -37,13 +37,13 @@ void setup() {
     if (!added) serial.print("could not register $led set");
 
     xewe_cli.add_command("dev", {"name", "Set the device name", "$dev name \"Kitchen\"", 1,
-        [](std::span<const std::string> args) {
+        [](xewe::span<const std::string> args) {
             device_name = args[0];   // COPY: the span does not outlive this call
             serial.printf("name: %s", device_name.c_str());
         }});
 
     xewe_cli.add_command("dev", {"show", "Print the device name", "$dev show", 0,
-        [](std::span<const std::string>) {
+        [](xewe::span<const std::string>) {
             serial.printf("name: %s", device_name.c_str());
         }});
 

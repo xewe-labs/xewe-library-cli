@@ -5,7 +5,7 @@
 ## Types
 
 ```cpp
-using command_function_t = std::function<void(std::span<const std::string> args)>;
+using command_function_t = std::function<void(xewe::span<const std::string> args)>;
 
 struct Command {
     std::string        name;
@@ -27,7 +27,7 @@ of `Command`, in order:
 
 ```cpp
 {"set", "Set level 0-255", "$led set 128", 1,
- [](std::span<const std::string> args) { analogWrite(8, atoi(args[0].c_str())); }}
+ [](xewe::span<const std::string> args) { analogWrite(8, atoi(args[0].c_str())); }}
 ```
 
 | Field | |

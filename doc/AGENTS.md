@@ -20,7 +20,7 @@ file is silent: never publish, never tag or push, never commit unasked, never fl
 * **Never name a `Cli` object `cli`.** The ESP32 Arduino core defines `cli` as a function-like
   macro, so `xewe::Cli cli(serial);` does not compile. Examples and docs use `xewe_cli`; keep it
   that way in every snippet you write.
-* **The handler's `std::span` is a view into a local vector.** Do not change `execute` to hand out
+* **The handler's `xewe::span` is a view into a local vector.** Do not change `execute` to hand out
   something that looks storable, and do not "fix" a handler by keeping the span — copy the
   strings.
 * **The two `execute` overloads match differently on purpose:** the parsed path on name only, the

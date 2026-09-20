@@ -29,7 +29,7 @@ Commands are typed as `$<group> <command> [args...]`. `$help` lists every group;
   alone and takes the first hit.
 * Group ids and command names are matched case-insensitively; ids are trimmed and lowercased when
   registered.
-* The `std::span` handed to a handler **does not outlive the call**.
+* The `xewe::span` handed to a handler **does not outlive the call**.
 * `$help` skips groups that have no commands.
 * `add_command` does not reject duplicate names.
 

@@ -6,17 +6,17 @@
 #include <cstddef>
 #include <functional>
 #include <map>
-#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
 
 #include <XeWeSerial.h>
+#include <XeWeUtils.h>
 
 
 namespace xewe {
 
-using command_function_t = std::function<void(std::span<const std::string> args)>;
+using command_function_t = std::function<void(xewe::span<const std::string> args)>;
 
 struct Command {
     std::string              name;
@@ -57,7 +57,7 @@ public:
     void                     execute            (std::string_view input_line)    const;
     bool                     execute            (std::string_view             group_id,
                                                  std::string_view             command_name,
-                                                 std::span<const std::string> args) const;
+                                                 xewe::span<const std::string> args) const;
 
     void                     print_help         (std::string_view group_id)      const;
     void                     print_all_commands ()                               const;
